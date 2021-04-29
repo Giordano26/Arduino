@@ -1,6 +1,7 @@
 //Alarme feito com buzzer e botão PULLUP
 const byte ledPin = 13;
 const byte interruptPin = 2;
+const byte resetPin = 3;
 volatile byte state = HIGH;
 const byte buzzer = 9;
 
@@ -11,13 +12,14 @@ void setup()
   pinMode(ledPin, OUTPUT);
   pinMode(interruptPin, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(interruptPin), blink, RISING); //rotina de interrupção quando sinal do botão for de low para high
+  pinMode(resetPin, INPUT_PULLUP);
   pinMode(buzzer, OUTPUT); 
 }
 
 void loop()
 {
   
-  while(state){ //se estado = true, botão foi pressionado e o led deverá ser acesso
+  while(state){ //se reset = false, botão foi pressionado e o led deverá ser acesso
   	digitalWrite(ledPin, HIGH);
     tone(buzzer,300,100);
   	delay(100);
@@ -36,4 +38,3 @@ void blink(){ //função de troca de estado do led
   state = !state;
   
 }
-
